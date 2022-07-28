@@ -25,7 +25,7 @@
 - [X] função para deletar a tarefa
 - [X] salvar no github
 - [X] apontar a home para o to-do 
-- [ ] deploy no heroku
+- [X] deploy no heroku
 
 ### Etapa 2: Login e Admin
 
@@ -33,4 +33,6 @@
 
 ### Etapa 4: Extras
 
+- [ ] completar a descrição do read.me
+- [ ] testar outro framework css classless ou light weight
 - [ ] deixar a forma de exibir se a tarefa está completa mais bonita
