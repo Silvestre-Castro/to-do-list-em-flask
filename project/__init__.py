@@ -16,7 +16,7 @@ class Tarefa(db.Model):
     descrição = db.Column(db.String, nullable = True)
     completa = db.Column(db.Boolean, default=False)
 
-
+@app.route("/")
 @app.route("/todo/")
 def todo():
 

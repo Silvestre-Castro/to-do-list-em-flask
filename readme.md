@@ -1,3 +1,19 @@
+# Projeto To-do list em flask
+
+## Descrição do projeto
+
+
+### Resumo
+
+
+### Tecnologias e features
+
+
+---
+## Progresso
+
+### Etapa 1: crud do to-do, salvar no github e deploy no heroku
+
 - [X] Hello world em flask.
 - [X] Criar modelo de tarefas.
 - [X] Init db no flask shell e popular 2 tarefas para teste. 
@@ -7,4 +23,14 @@
 - [X] form na pg de To-do para adicionar tarefa no banco
 - [X] função para dar "check" na tarefa, sem pg, redireciona para a lista de novo.
 - [X] função para deletar a tarefa
+- [ ] salvar no github
+- [X] apontar a home para o to-do 
+- [ ] deploy no heroku
+
+### Etapa 2: Login e Admin
+
+### Etapa 3: APIS
+
+### Etapa 4: Embelezar o front.
+
 - [ ] deixar a forma de exibir se a tarefa está completa mais bonita
