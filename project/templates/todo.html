@@ -19,18 +19,16 @@
 
     <table>
         <tr>
-            <th>ID</th>
+            <th>Feita?</th>
             <th>Descrição</th>
-            <th>Completa</th>
             <th></th>
             <th></th>
         </tr>
 
-        {% for tarefa in lista_de_tarefas %}
+        {% for tarefa in current_user.tarefas %}
             <tr>
-                <td>{{ tarefa.id }}</td>
-                <td>{{ tarefa.descrição }}</td>
                 <td>{{ tarefa.completa }}</td>
+                <td>{{ tarefa.descrição }}</td>
                 <td><a href="/todo/{{ tarefa.id }}/check/">Atualizar</a></td>
                 <td><a href="/todo/{{ tarefa.id }}/delete/">Apagar</a></td>
             </tr>            

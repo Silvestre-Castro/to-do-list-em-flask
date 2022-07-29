@@ -19,6 +19,7 @@ app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 db = SQLAlchemy(app)
 
 
+
 class Usuário(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key = True)
@@ -28,6 +29,9 @@ class Usuário(db.Model, UserMixin):
     admin = db.Column(db.Boolean, default = False)
 
     tarefas = db.relationship('Tarefa', backref = 'usuário')
+
+    def __repr__(self):
+        return f"<Usuário: {self.nome}>"
 
     
 
@@ -43,13 +47,10 @@ class Tarefa(db.Model):
 
 login_manager = LoginManager(app)
 
-
 @login_manager.user_loader
 def load_user(user_id):
 
     return db.session.get(Usuário, user_id)
-
-
 
 
 # Admin =============================================
@@ -158,16 +159,10 @@ def logout():
 @login_required
 def todo():
 
-    stmt = select(Tarefa)
-    result = list(db.session.execute(stmt))
+    # to acessando as tarefas do current_user direto no template jinja, por isso não tem mais código aqui.
+    #print(current_user.tarefas)
 
-    lista_de_tarefas = []
-    for tupla in result:
-
-        lista_de_tarefas.append(tupla[0])
-
-
-    return render_template("todo.html", lista_de_tarefas = lista_de_tarefas)
+    return render_template("todo.html")
 
 
 @app.route("/todo/add/", methods = ["POST"])

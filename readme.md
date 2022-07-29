@@ -49,10 +49,11 @@
 - [X] atualizar o requirements.txt
 - [X] criar um relacionamento entre tarefas e usuário.
 - [X] restringir o acesso do to-do para usuários logados
-- [ ] o add do to-do tem apontar para o dono da tarefa
-- [ ] Na página to-do, mostrar apenas as tarefas do usuário logado (current_user)
+- [X] o add do to-do tem apontar para o dono da tarefa
+- [X] Na página to-do, mostrar apenas as tarefas do usuário logado (current_user)
 - [ ] restringir o acesso as views do admin para usuários admin.
-- [ ] mudar o dunder repr de usuário para mostrar o nome e o id
+- [X] mudar o dunder repr de usuário para mostrar o nome e o id
+- [ ] adicionar o usuário logado no cabeçalho junto com um botão de logout
 
 ### Etapa 3: APIS e Modulirizar a aplicação
 

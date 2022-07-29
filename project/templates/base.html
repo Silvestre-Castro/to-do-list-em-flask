@@ -19,9 +19,12 @@
             <a href="/todo/">to-do list</a>
             <a href="/cadastro/">cadastro</a>
             <a href="/login/">login</a>
-            <a href="/logout/">logout</a>
             <a href="/admin/">Admin</a>
         </nav>
+
+        {% if current_user.is_authenticated %}
+            <p>Bem vindo, {{current_user.nome}}. clique aqui para <a href="/logout/">sair</a></p>
+        {% endif %}
 
     </header> 
 
