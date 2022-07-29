@@ -27,7 +27,30 @@
 - [X] apontar a home para o to-do 
 - [X] deploy no heroku
 
+
 ### Etapa 2: Login e Admin
+
+- [X] colocar secret key no app
+- [X] instalar o flask-login na venv
+- [X] instânciar login_manager
+- [X] criar modelo para Usuário e herdar o user mixin
+- [X] criar a função user_loader
+
+- [X] instalar o flask-admin
+- [X] instanciar Admin e configurar o app
+- [X] adicionar os modelos no admin
+
+- [ ] criar um view de home separada do to-do
+- [ ] criar um view de login
+- [ ] criar uma view registro
+- [ ] botão de logout
+- [ ] hash no registro e na verificação do login
+
+- [X] atualizar o requirements.txt
+- [ ] criar um relacionamento entre tarefas e usuário.
+- [ ] restringir o acesso do to-do para usuários logados
+- [ ] Na página to-do, mostrar apenas as tarefas do usuário logado (current_user)
+- [ ] restringir o acesso as views do admin para usuários admin.
 
 ### Etapa 3: APIS e Modulirizar a aplicação
 

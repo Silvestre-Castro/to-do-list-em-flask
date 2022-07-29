@@ -1,14 +1,31 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text, select
+from flask_login import LoginManager, UserMixin
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///banco.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'Gty$$asd567456uihds45'
+app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+
+
+# DB e Models ===========================================
 
 db = SQLAlchemy(app)
 
+
+class Usuário(db.Model, UserMixin):
+
+    id = db.Column(db.Integer, primary_key = True)
+    nome = db.Column(db.String, nullable = False)
+    email = db.Column(db.String, nullable = False, unique = True)
+    senha = db.Column(db.String, nullable = False)
+    admin = db.Column(db.Boolean, default = False)
+    
 
 class Tarefa(db.Model):
 
@@ -16,7 +33,39 @@ class Tarefa(db.Model):
     descrição = db.Column(db.String, nullable = True)
     completa = db.Column(db.Boolean, default=False)
 
+
+# Login =============================================
+
+login_manager = LoginManager(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+
+    return db.session.get(Usuário, user_id)
+
+
+
+
+# Admin =============================================
+
+admin = Admin(app, template_mode="bootstrap3")
+
+admin.add_view(ModelView(Usuário, db.session))
+admin.add_view(ModelView(Tarefa, db.session))
+
+
+# Views =============================================
+
+
+
+
 @app.route("/")
+def home():
+
+    return render_template("home.html")
+
+
 @app.route("/todo/")
 def todo():
 
