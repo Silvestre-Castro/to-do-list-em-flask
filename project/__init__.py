@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, get
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text, select
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -55,10 +55,33 @@ def load_user(user_id):
 
 # Admin =============================================
 
-admin = Admin(app, template_mode="bootstrap3")
 
-admin.add_view(ModelView(Usuário, db.session))
-admin.add_view(ModelView(Tarefa, db.session))
+class MyAdminIndexView(AdminIndexView):
+
+    def is_accessible(self):
+
+        return current_user.is_authenticated and current_user.admin
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login', next=request.url))
+
+
+class MyModelView(ModelView):
+
+    def is_accessible(self):
+
+        return current_user.is_authenticated and current_user.admin
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login', next=request.url))
+
+    
+admin = Admin(app, template_mode="bootstrap3", index_view=MyAdminIndexView())
+
+admin.add_view(MyModelView(Usuário, db.session))
+admin.add_view(MyModelView(Tarefa, db.session))
 
 
 # Views =============================================

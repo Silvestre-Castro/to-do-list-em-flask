@@ -19,7 +19,10 @@
             <a href="/todo/">to-do list</a>
             <a href="/cadastro/">cadastro</a>
             <a href="/login/">login</a>
+
+            {% if current_user.is_authenticated and current_user.admin %}
             <a href="/admin/">Admin</a>
+            {% endif %}
         </nav>
 
         {% if current_user.is_authenticated %}

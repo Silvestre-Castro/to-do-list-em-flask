@@ -51,9 +51,10 @@
 - [X] restringir o acesso do to-do para usuários logados
 - [X] o add do to-do tem apontar para o dono da tarefa
 - [X] Na página to-do, mostrar apenas as tarefas do usuário logado (current_user)
-- [ ] restringir o acesso as views do admin para usuários admin.
+- [X] restringir o acesso as views do admin para usuários admin.
 - [X] mudar o dunder repr de usuário para mostrar o nome e o id
-- [ ] adicionar o usuário logado no cabeçalho junto com um botão de logout
+- [X] adicionar o usuário logado no cabeçalho junto com um botão de logout
+- [ ] colocar a mascara de e-mail no cadatro e login (atualizar e-mail do usuário admin e pelo banco)
 
 ### Etapa 3: APIS e Modulirizar a aplicação
 
