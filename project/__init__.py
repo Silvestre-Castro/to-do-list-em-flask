@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text, select
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -26,6 +26,9 @@ class Usuário(db.Model, UserMixin):
     email = db.Column(db.String, nullable = False, unique = True)
     senha = db.Column(db.String, nullable = False)
     admin = db.Column(db.Boolean, default = False)
+
+    tarefas = db.relationship('Tarefa', backref = 'usuário')
+
     
 
 class Tarefa(db.Model):
@@ -34,6 +37,7 @@ class Tarefa(db.Model):
     descrição = db.Column(db.String, nullable = True)
     completa = db.Column(db.Boolean, default=False)
 
+    id_usuário = db.Column(db.Integer, db.ForeignKey("usuário.id"), nullable = False)
 
 # Login =============================================
 
@@ -174,7 +178,7 @@ def add():
 
         descrição = request.form.get("descrição")
 
-        tarefa = Tarefa(descrição = descrição)
+        tarefa = Tarefa(descrição = descrição, usuário = current_user)
 
         db.session.add(tarefa)
         db.session.commit()
