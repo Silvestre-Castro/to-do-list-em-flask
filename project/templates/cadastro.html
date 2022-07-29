@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block título %}
+    Cadastro
+{% endblock título %}
+
+
+{% block conteúdo %}
+    <h3>Cadastro</h3>
+
+    <form action="" method="post">
+
+        <input type="text" name="nome" placeholder="Seu nome" required>
+        <input type="text" name="email" placeholder="Seu e-mail" required>
+        <input type="password" name="senha" placeholder="Sua senha" required>
+
+        <button type="submit">cadastrar</button>
+
+    </form>
+
+    <p>{{get_flashed_messages()[0]}}</p>
+    
+{% endblock conteúdo %}

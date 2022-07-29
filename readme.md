@@ -40,15 +40,15 @@
 - [X] instanciar Admin e configurar o app
 - [X] adicionar os modelos no admin
 
-- [ ] criar um view de home separada do to-do
-- [ ] criar um view de login
-- [ ] criar uma view registro
-- [ ] botão de logout
-- [ ] hash no registro e na verificação do login
+- [X] criar um view de home separada do to-do
+- [X] criar um view de login
+- [X] criar uma view registro
+- [X] botão de logout
+- [X] hash no registro e na verificação do login
 
 - [X] atualizar o requirements.txt
 - [ ] criar um relacionamento entre tarefas e usuário.
-- [ ] restringir o acesso do to-do para usuários logados
+- [X] restringir o acesso do to-do para usuários logados
 - [ ] Na página to-do, mostrar apenas as tarefas do usuário logado (current_user)
 - [ ] restringir o acesso as views do admin para usuários admin.
 

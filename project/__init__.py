@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text, select
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 app = Flask(__name__)
@@ -66,7 +67,91 @@ def home():
     return render_template("home.html")
 
 
+# Views de Login --------------------------------
+
+
+@app.route("/login/", methods = ["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+        
+
+        stmt = select(Usuário).where(Usuário.email == email)
+        result = list(db.session.execute(stmt))
+        
+        usuário = None
+
+        if result:
+            usuário = result[0][0]
+ 
+        if not usuário:
+            flash("usuário não existe")
+
+        elif not check_password_hash(usuário.senha, senha):
+
+            flash("Senha incorreta!")
+
+        elif check_password_hash(usuário.senha, senha):
+
+            login_user(usuário)
+
+            return redirect(url_for("todo"))
+    
+
+    return render_template("login.html")
+
+
+@app.route("/cadastro/", methods = ["GET", "POST"])
+def cadastro():
+
+    if request.method == "POST":
+
+        nome = request.form.get('nome')
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+        
+
+        stmt = select(Usuário).where(Usuário.email == email)
+        result = list(db.session.execute(stmt))
+        
+
+        if result:
+            
+            flash('email já cadastrado')
+        
+        else:
+
+            novo_usuário = Usuário(
+                nome = nome,
+                email = email,
+                senha = generate_password_hash(senha, method='sha256')
+            )
+
+            db.session.add(novo_usuário)
+            db.session.commit()
+            flash('Efetue seu login para começar!')
+            return redirect(url_for('login'))        
+    
+
+    return render_template("cadastro.html")
+
+
+@app.route("/logout/")
+def logout():
+
+    logout_user()
+
+    return redirect(url_for("login"))
+
+
+# Views do To-Do -------------------------------
+
+
 @app.route("/todo/")
+@login_required
 def todo():
 
     stmt = select(Tarefa)
@@ -82,6 +167,7 @@ def todo():
 
 
 @app.route("/todo/add/", methods = ["POST"])
+@login_required
 def add():
 
     if request.method == "POST":
@@ -98,6 +184,7 @@ def add():
 
 
 @app.route("/todo/<int:id_tarefa>/check/")
+@login_required
 def check(id_tarefa):
 
     tarefa = db.session.get(Tarefa, id_tarefa)
@@ -110,6 +197,7 @@ def check(id_tarefa):
 
 
 @app.route("/todo/<int:id_tarefa>/delete/")
+@login_required
 def delete(id_tarefa):
 
     tarefa = db.session.get(Tarefa, id_tarefa)
