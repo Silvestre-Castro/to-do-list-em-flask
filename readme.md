@@ -54,9 +54,20 @@
 - [X] restringir o acesso as views do admin para usuários admin.
 - [X] mudar o dunder repr de usuário para mostrar o nome e o id
 - [X] adicionar o usuário logado no cabeçalho junto com um botão de logout
-- [ ] colocar a mascara de e-mail no cadatro e login (atualizar e-mail do usuário admin e pelo banco)
+- [ ] colocar a máscara de e-mail no cadastro e login (atualizar e-mail do usuário admin e pelo banco)
 
 ### Etapa 3: APIS e Modulirizar a aplicação
+
+- [ ] get de todos os usuários
+- [ ] post de novo usuário
+- [ ] get de usuário e suas tarefas
+- [ ] put de um usúário (update)
+- [ ] delete de um usuário
+
+- [ ] post de uma tarefa
+- [ ] get de uma tarefa
+- [ ] put de uma tarefa 
+- [ ] delete\ de uma tarefa 
 
 ### Etapa 4: Extras
 
