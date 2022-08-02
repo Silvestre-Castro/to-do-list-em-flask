@@ -58,8 +58,8 @@
 
 ### Etapa 3: APIS e Modulirizar a aplicação
 
-- [ ] get de todos os usuários
-- [ ] post de novo usuário
+- [X] get de todos os usuários
+
 - [ ] get de usuário e suas tarefas
 - [ ] put de um usúário (update)
 - [ ] delete de um usuário

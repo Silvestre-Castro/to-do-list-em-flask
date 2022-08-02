@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text, select
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
@@ -85,8 +85,6 @@ admin.add_view(MyModelView(Tarefa, db.session))
 
 
 # Views =============================================
-
-
 
 
 @app.route("/")
@@ -228,3 +226,44 @@ def delete(id_tarefa):
     db.session.commit()
 
     return redirect(url_for("todo"))
+
+
+# APIs ==============================================
+
+
+@app.route("/api/usuários/", methods = ["GET"])
+def api_get_usuários():
+
+    if request.method == "GET":
+        stmt = select(Usuário)
+        result = list(db.session.execute(stmt))
+
+        print(result)
+
+        list_of_dicts = []
+
+        for tupla in result:
+
+            dicio = tupla[0].__dict__.copy()
+            dicio.pop('_sa_instance_state')
+            dicio.pop('senha')
+            list_of_dicts.append(dicio)
+
+        print(list_of_dicts)
+
+        return jsonify(usuários = list_of_dicts)
+
+
+@app.route("/api/usuário/<int:id_usuário>/", methods = ["GET"])
+def api_get_usuário_por_id(id_usuário):
+
+    usuário = db.session.get(Usuário, id_usuário)
+
+    if usuário:
+
+        user_dict = usuário.__dict__.copy()
+
+        print(user_dict)
+
+
+    return jsonify(data = user_dict)
