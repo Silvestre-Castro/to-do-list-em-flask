@@ -253,17 +253,29 @@ def api_get_usuários():
 
         return jsonify(usuários = list_of_dicts)
 
+@app.route("/api/usuário/<int:user_id>/")
+def api_user(user_id):
 
-@app.route("/api/usuário/<int:id_usuário>/", methods = ["GET"])
-def api_get_usuário_por_id(id_usuário):
+    user = db.session.get(Usuário, user_id)
 
-    usuário = db.session.get(Usuário, id_usuário)
+    if user:
+        
+        user_dict = user.__dict__.copy()
 
-    if usuário:
-
-        user_dict = usuário.__dict__.copy()
+        user_dict.pop('_sa_instance_state')
+        user_dict.pop('senha')
 
         print(user_dict)
+        print(user.tarefas)
 
+        tarefas_list = []
 
-    return jsonify(data = user_dict)
+        for tarefa in user.tarefas:
+            tarefas_list.append(tarefa.descrição)
+
+        user_dict.update({'tarefas':tarefas_list})
+
+        return jsonify(data=user_dict)
+
+    else:
+        return jsonify(data = "User not found")

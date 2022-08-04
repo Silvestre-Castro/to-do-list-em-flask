@@ -60,8 +60,8 @@
 
 - [X] get de todos os usuários
 
-- [ ] get de usuário e suas tarefas
-- [ ] put de um usúário (update)
+- [X] get de usuário por id e suas tarefas
+- [ ] put de um usuário (update)
 - [ ] delete de um usuário
 
 - [ ] post de uma tarefa
