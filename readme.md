@@ -59,15 +59,17 @@
 ### Etapa 3: APIS e Modulirizar a aplicação
 
 - [X] get de todos os usuários
+- [X] post usuários
 
 - [X] get de usuário por id e suas tarefas
-- [ ] put de um usuário (update)
-- [ ] delete de um usuário
+- [X] put de um usuário (update)
+- [X] delete de um usuário
 
-- [ ] post de uma tarefa
+- [X] post de uma tarefa para o usuário (na pg de usuário por id)
+
 - [ ] get de uma tarefa
 - [ ] put de uma tarefa 
-- [ ] delete\ de uma tarefa 
+- [ ] delete de uma tarefa 
 
 ### Etapa 4: Extras
 

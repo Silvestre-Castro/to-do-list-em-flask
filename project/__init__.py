@@ -231,14 +231,14 @@ def delete(id_tarefa):
 # APIs ==============================================
 
 
-@app.route("/api/usuários/", methods = ["GET"])
+@app.route("/api/usuários/", methods = ["GET", "POST"])
 def api_get_usuários():
 
     if request.method == "GET":
         stmt = select(Usuário)
         result = list(db.session.execute(stmt))
 
-        print(result)
+        #print(result)
 
         list_of_dicts = []
 
@@ -249,24 +249,59 @@ def api_get_usuários():
             dicio.pop('senha')
             list_of_dicts.append(dicio)
 
-        print(list_of_dicts)
+        #print(list_of_dicts)
 
-        return jsonify(usuários = list_of_dicts)
+        return jsonify(users = list_of_dicts)
 
-@app.route("/api/usuário/<int:user_id>/")
+    elif request.method == "POST":
+
+        nome = request.form.get('nome')
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+
+        #print(nome, email, senha)
+
+        # checagem de informações necessárias
+        if nome and email and senha:
+
+            # checagem se já existe algum cadastrado com esse e-mail
+            stmt = select(Usuário).where(Usuário.email == email).limit(1)
+            result = list(db.session.execute(stmt))
+            
+            if not result:
+
+                senha = generate_password_hash(senha, method='sha256')
+
+                novo_usuário = Usuário(nome = nome, senha = senha, email=email)
+
+                db.session.add(novo_usuário)
+                db.session.commit()
+
+                return jsonify(data="usuário inserido")
+
+            else:
+
+                return jsonify(data="usuário já existe!")
+        else:
+
+            return jsonify(data = "informações faltanto")
+
+
+@app.route("/api/usuário/<int:user_id>/", methods = ['GET', 'PUT', 'DELETE', 'POST'])
 def api_user(user_id):
 
+    
     user = db.session.get(Usuário, user_id)
 
-    if user:
+    if user and request.method == "GET":
         
         user_dict = user.__dict__.copy()
 
         user_dict.pop('_sa_instance_state')
         user_dict.pop('senha')
 
-        print(user_dict)
-        print(user.tarefas)
+        #print(user_dict)
+        #print(user.tarefas)
 
         tarefas_list = []
 
@@ -276,6 +311,57 @@ def api_user(user_id):
         user_dict.update({'tarefas':tarefas_list})
 
         return jsonify(data=user_dict)
+
+
+    elif user and request.method == "PUT":
+
+        nome = request.form.get('nome')
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+
+        if nome:
+
+            user.nome = nome
+
+        if email: 
+            
+            user.email = email
+
+        if senha:
+
+            user.senha = generate_password_hash(senha, method='sha256')
+        
+        db.session.flush()
+        db.session.commit()
+
+        return jsonify(data='usuário atualizado!')
+
+
+    elif user and request.method == "DELETE":
+
+        db.session.delete(user)
+        db.session.commit()
+
+        return jsonify(dta="usuário apagado!") 
+
+    # post de tarefa para esse usuário, não de novo usuário
+    elif user and request.method == "POST":
+
+        descrição = request.form.get("descrição")
+
+        if descrição:
+
+            nova_tarefa = Tarefa(descrição=descrição, usuário = user)
+
+            db.session.add(nova_tarefa)
+            db.session.commit()
+
+            return jsonify(data="tarefa adicionada!")
+
+        else: 
+
+            return jsonify(data="informações faltando!")
+            
 
     else:
         return jsonify(data = "User not found")
