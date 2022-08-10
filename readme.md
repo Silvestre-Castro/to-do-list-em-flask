@@ -5,8 +5,17 @@
 
 ### Resumo
 
+Um projeto para por em prática a construção de back-end com Python, SQL, Flask e suas extensões.
+Trata-se de um site de lista de tarefas onde cada usuário pode criar sua conta e organizar seus afazeres de forma simples e minimalista.
 
-### Tecnologias e features
+### Tecnologias usadas
+
+- Python
+- SQLite3
+- Flask
+ - Flask-SQLAlchemy (ORM)
+ - FLask-Login
+ - Flask-Admin
 
 
 ---
@@ -75,4 +84,4 @@
 
 - [ ] completar a descrição do read.me
 - [ ] testar outro framework css classless ou light weight
-- [ ] deixar a forma de exibir se a tarefa está completa mais bonita
+- [ ] deixar a forma de exibir tarefas mais bonita
